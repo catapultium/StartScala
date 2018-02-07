@@ -1,6 +1,8 @@
 package rational
 
 object Main {
+  implicit def intToRational(x:Int) = new Rational(x)
+
   def main(args: Array[String]): Unit = {
     val oneHalf = new Rational(1, 2)
     val twoThirds = new Rational(2, 3)
@@ -34,6 +36,9 @@ object Main {
     println(oneHalf + 1)
     println(oneHalf / 2)
     println(oneHalf * 4)
+
+    /* 암시적 타입 변환 */
+    println(1 + oneHalf)
 
   }
 }
