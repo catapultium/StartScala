@@ -29,5 +29,11 @@ object Main {
     println((x + x) * y)
     println(x + (x * y))
 
+    /* 정수 연산 */
+    println(oneHalf - 1)
+    println(oneHalf + 1)
+    println(oneHalf / 2)
+    println(oneHalf * 4)
+
   }
 }
