@@ -50,5 +50,28 @@ object Function {
     println(a.apply(1, 2, 3))
     val b = sum(1, _: Int, 3)
     println(b(2))
+
+    ---
+
+    /* 클로저 */
+    var more = 1
+    val addMore = (x: Int) => x + more
+    println(addMore(10))
+    more = 100
+    println(addMore(10))
+
+    val someNumbers2 = List(-11, -10, -5, 0, 5, 10)
+    var s = 0
+    someNumbers2.foreach(s += _)
+    println(s)
+
+    /* 포획된 more 값은 heap 에 남아 스택보다 오래 살아있다. */
+    def makeIncreaser(more: Int) = (x: Int) => x + more
+    val inc1 = makeIncreaser(1)
+    val inc9999 = makeIncreaser(9999)
+    println(inc1(10))
+    println(inc9999(10))
+
+
   }
 }
