@@ -30,6 +30,7 @@ object Function {
 
     /* 간단한 사용 */
     someNumbers.filter(x => x > 0).foreach(x => println(x))
+    /* 명시적으로 함수가 들어가는 경우에만 사용 가능 */
     someNumbers.filter(_ > 0).foreach(println)
 
 
@@ -37,5 +38,17 @@ object Function {
     /* 위치 표시자는 각 한번 사용할 수 있으며, 2개가 쓰이면 2번째 인자이다. */
     val plus = (_: Int) + (_: Int)
     println(plus(2, 5))
+
+    ---
+
+    /* 부분 함수 적용 */
+    def sum(a: Int, b: Int, c: Int) = a + b + c
+
+    println(sum(1, 2, 3))
+    val a = sum _
+    println(a(1, 2, 3))
+    println(a.apply(1, 2, 3))
+    val b = sum(1, _: Int, 3)
+    println(b(2))
   }
 }
