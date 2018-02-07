@@ -30,7 +30,7 @@ object Function {
 
     /* 간단한 사용 */
     someNumbers.filter(x => x > 0).foreach(x => println(x))
-    someNumbers.filter(_ > 0).foreach(println(_))
+    someNumbers.filter(_ > 0).foreach(println)
 
 
     ---
