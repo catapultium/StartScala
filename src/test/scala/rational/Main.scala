@@ -9,5 +9,7 @@ object Main {
     /* 공개 필드이므로 접근 가능 */
     println(oneHalf.numer)
     println(oneHalf.denom)
+
+    println(twoThirds max oneHalf).toString
   }
 }
