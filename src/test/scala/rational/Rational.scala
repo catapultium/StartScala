@@ -9,14 +9,15 @@ class Rational(n: Int, d: Int) {
   require(d != 0)
 
   /* 메소드 스코프에 바로 접근할 수 없기 떄문에 필드를 추가한다. */
-  val numer: Int = n
-  val denom: Int = d
+  private val g = gcd(n.abs, d.abs)
+  val numer: Int = n / g
+  val denom: Int = d / g
 
   /* 보조 생성자. 분모가 1일 경우 분자만 입력하면 되도록 */
   def this(n: Int) = this(n, 1)
 
   /* 지정하지 않으면 클래스이름@16진수숫자 */
-  override def toString: String = n + "/" + d
+  override def toString: String = numer + "/" + denom
 
   def add(that: Rational): Rational = new Rational(
     numer * that.denom + that.numer * denom,
@@ -25,4 +26,7 @@ class Rational(n: Int, d: Int) {
   def lessThen(that: Rational) = this.numer * that.denom < that.numer * this.denom
 
   def max(that: Rational) = if (this.lessThen(that)) that else this
+
+  /* 비공개 메소드. 최대 공약수를 구한다. */
+  private def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
 }

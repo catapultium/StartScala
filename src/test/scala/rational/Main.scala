@@ -13,5 +13,7 @@ object Main {
     println(twoThirds max oneHalf).toString
 
     println(new Rational(5)).toString
+
+    println(new Rational(66,42)).toString
   }
 }
