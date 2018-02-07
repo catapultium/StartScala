@@ -19,9 +19,11 @@ class Rational(n: Int, d: Int) {
   /* 지정하지 않으면 클래스이름@16진수숫자 */
   override def toString: String = numer + "/" + denom
 
-  def add(that: Rational): Rational = new Rational(
+  def +(that: Rational): Rational = new Rational(
     numer * that.denom + that.numer * denom,
     denom * that.denom)
+
+  def *(that: Rational): Rational = new Rational(numer * that.numer, denom * that.denom)
 
   def lessThen(that: Rational) = this.numer * that.denom < that.numer * this.denom
 
