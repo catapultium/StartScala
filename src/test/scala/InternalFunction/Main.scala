@@ -73,5 +73,16 @@ object Main {
       } yield trimmed.length
     for (len <- forLineLengths)
       println(len)
+
+
+    /* match */
+    val firstArg = if (args.length > 0) args(0) else "chips"
+    val friend = firstArg match {
+      case "salt" => "pepper"
+      case "chips" => "salsa"
+      case "eggs" => "bacon"
+      case _ => "huh?"
+    }
+    println(friend)
   }
 }
