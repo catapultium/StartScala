@@ -12,6 +12,9 @@ class Rational(n: Int, d: Int) {
   val numer: Int = n
   val denom: Int = d
 
+  /* 보조 생성자. 분모가 1일 경우 분자만 입력하면 되도록 */
+  def this(n: Int) = this(n, 1)
+
   /* 지정하지 않으면 클래스이름@16진수숫자 */
   override def toString: String = n + "/" + d
 

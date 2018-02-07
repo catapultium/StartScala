@@ -11,5 +11,7 @@ object Main {
     println(oneHalf.denom)
 
     println(twoThirds max oneHalf).toString
+
+    println(new Rational(5)).toString
   }
 }
