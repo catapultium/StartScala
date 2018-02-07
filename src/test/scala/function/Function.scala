@@ -22,5 +22,12 @@ object Function {
     someNumbers.foreach((x: Int) => println(x))
     someNumbers.filter((x: Int) => x > 0).foreach((x: Int) => println(x))
 
+    /* 간단한 사용 */
+    someNumbers.filter(x => x > 0).foreach(x => println(x))
+    someNumbers.filter(_ > 0).foreach(println(_))
+
+    /* 위치 표시자는 각 한번 사용할 수 있으며, 2개가 쓰이면 2번째 인자이다. */
+    val plus = (_: Int) + (_: Int)
+    println(plus(2, 5))
   }
 }
