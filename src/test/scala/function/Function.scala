@@ -67,11 +67,42 @@ object Function {
 
     /* 포획된 more 값은 heap 에 남아 스택보다 오래 살아있다. */
     def makeIncreaser(more: Int) = (x: Int) => x + more
+
     val inc1 = makeIncreaser(1)
     val inc9999 = makeIncreaser(9999)
     println(inc1(10))
     println(inc9999(10))
 
+    ---
+
+    /* 반복 파라미터 */
+    def echo(args: String*) = for (arg <- args) println(arg)
+
+    echo()
+    echo("one")
+    echo("one", "two", "three")
+
+    val arr = Array("A", "B", "C")
+
+    /* echo(arr) 직접 전달 불가. 각 원소로 전달해야 함. */
+    echo(arr: _*)
+
+    /* 이름 붙인 인자 */
+    def speed(distance: Float, time: Float): Float = distance / time
+
+    println(speed(100, 10))
+    println(speed(time = 10, distance = 100))
+
+    /* 디폴트 인자 값 */
+    def printTime(out: java.io.PrintStream = Console.out) = out.println("time = " + System.currentTimeMillis())
+
+    printTime()
+    printTime(Console.err)
+
+    def printTime2(out: java.io.PrintStream = Console.out, divisor: Int = 1) =
+      out.println("time = " + System.currentTimeMillis() / divisor)
+
+    printTime2(divisor = 1000)
 
   }
 }
