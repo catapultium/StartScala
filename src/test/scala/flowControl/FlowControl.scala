@@ -1,6 +1,7 @@
 package flowControl
 
 import java.io.{File, PrintWriter}
+import java.util.function.Predicate
 
 object FlowControl {
   def main(args: Array[String]): Unit = {
@@ -79,6 +80,38 @@ object FlowControl {
     withPrintWriter2(file) {
       writer => writer.println(new java.util.Date)
     }
+
+
+    /* 이름에 의한 호출 파라미터 by-name parameter */
+    var assertionsEnabled = true
+
+    def myAssert(predicate: () => Boolean) =
+      if (assertionsEnabled && !predicate())
+        throw new AssertionError
+
+    /* () => 가 달갑지 않다. */
+    myAssert(() => 5 > 3)
+
+    /* 이제 ()를 쓰지 않아도 된다. 파라미터에서만 사용 가능하다 */
+    def byNameAssert(predicate: => Boolean) =
+      if (assertionsEnabled && !predicate)
+        throw new AssertionError
+
+    byNameAssert(5 > 3)
+
+    /* Boolean 을 인자타입으로 사용할 수 있지만 큰 차이점이 있다.
+    이 경우 5 > 3 이 계산된 후에 true 값이 전달되는 것이며
+    위의 경우는 5 > 3 을 계산하는 내용의 apply 메소드가 들어간 함수값이 넘어간다. */
+    def boolAssert(predicate: Boolean) =
+      if (assertionsEnabled && !predicate)
+        throw new AssertionError
+
+    boolAssert(5 > 3)
+
+    /* 먼저 계산하기 떄문에  */
+    assertionsEnabled = false
+    byNameAssert(5 / 0 == 0)
+    boolAssert(5 / 0 == 0)
 
   }
 }
