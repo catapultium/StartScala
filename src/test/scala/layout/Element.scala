@@ -16,13 +16,17 @@ abstract class Element {
   * 필드를 사용하면 클래스가 초기화시에 값을 미리 계산해 두며 각 필드를 저장할 별도 메모리 공간이 필요하다 */
   def height: Int = contents.length
 
-  def width: Int = if (height == 0) 0 else contents(0).length
+  def width: Int = contents(0).length
 
   /* 스칼라는 빈 괄호를 모두 생략할 수 있지만 부수효과가 있는 경우에는 사용하기를 권장
    * "hello".length
    * println() */
 
-  def above(that: Element): Element = elem(this.contents ++ that.contents)
+  def above(that: Element): Element = {
+    val this1 = this widen that.width
+    val that1 = that widen this.width
+    elem(this1.contents ++ that1.contents)
+  }
 
   def beside(that: Element): Element = {
     //    val contents = new Array[String](this.contents.length)
@@ -30,9 +34,10 @@ abstract class Element {
     //      contents(i) = this.contents(i) + that.contents(i)
     //    new ArrayElement(contents)
 
+    val this1 = this heighten that.height
+    val that1 = that heighten this.height
     elem(
-      for (
-        (line1, line2) <- this.contents zip that.contents
+      for ((line1, line2) <- this1.contents zip that1.contents
       ) yield line1 + line2
     )
 
@@ -40,6 +45,22 @@ abstract class Element {
     * Array(1, 2, 3) zip Array("a", "b")
     * Array((1, "a"), (2, "b")) */
   }
+
+  def widen(w: Int): Element =
+    if (w <= width) this
+    else {
+      val left = elem(' ', (w - width) / 2, height)
+      val right = elem(' ', w - width - left.width, height)
+      left beside this beside right
+    }
+
+  def heighten(h: Int): Element =
+    if (h <= height) this
+    else {
+      val top = elem(' ', width, (h - height) / 2)
+      var bot = elem(' ', width, h - height - top.height)
+      top above this above bot
+    }
 
   override def toString = contents mkString "\n"
 
