@@ -1,5 +1,9 @@
 package layout
 
+/* elem 만 사용하여 접근 가능하도록 */
+
+import Element.elem
+
 /* 추상맴버를 데리고 있어서 추상 클래스. 그래서 바로 인스턴스로 못 만듬. new Element 이런거 안됨. */
 abstract class Element {
 
@@ -18,7 +22,7 @@ abstract class Element {
    * "hello".length
    * println() */
 
-  def above(that: Element): Element = new ArrayElement(this.contents ++ that.contents)
+  def above(that: Element): Element = elem(this.contents ++ that.contents)
 
   def beside(that: Element): Element = {
     //    val contents = new Array[String](this.contents.length)
@@ -26,7 +30,7 @@ abstract class Element {
     //      contents(i) = this.contents(i) + that.contents(i)
     //    new ArrayElement(contents)
 
-    new ArrayElement(
+    elem(
       for (
         (line1, line2) <- this.contents zip that.contents
       ) yield line1 + line2
@@ -37,4 +41,43 @@ abstract class Element {
     * Array((1, "a"), (2, "b")) */
   }
 
+  override def toString = contents mkString "\n"
+
+}
+
+object Element {
+
+  /* 그래서 contents 를 파라미터 필드로 정의했다.
+ * () 안에 private 같은 수식자 등도 추가 가능하다. */
+  private class ArrayElement(val contents: Array[String]) extends Element {
+
+    /* 단순히 contents 필드로 복사하기 위해 conts 라는 이름이 나왔다.
+     * def contents: Array[String] = conts */
+  }
+
+  /* Element 를 바로 상속하도록 변경 */
+  private class LineElement(s: String) extends Element {
+    val contents = Array(s)
+
+    override def width = s.length
+
+    override def height = 1
+
+  }
+
+  private class UniformElement(ch: Char,
+                               override val width: Int,
+                               override val height: Int,
+                              ) extends Element {
+    private val line = ch.toString * width
+
+    def contents = Array.fill(height)(line)
+  }
+
+  /* 팩토리 메소드 추가 */
+  def elem(contents: Array[String]): Element = new ArrayElement(contents)
+
+  def elem(chr: Char, width: Int, height: Int): Element = new UniformElement(chr, width, height)
+
+  def elem(line: String): Element = new LineElement(line)
 }

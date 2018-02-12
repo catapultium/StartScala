@@ -2,11 +2,6 @@ package layout
 
 object Layout {
   def main(args: Array[String]): Unit = {
-    val e1: Element = new ArrayElement(Array("hello", "world"))
-    val ae: Element = new LineElement("hello")
-    var e2: Element = ae
-    var e3: Element = new UniformElement('x', 2, 3)
-
 
     /* 슈퍼클래스 상속 테스트 */
     def invokedDemo(e: ElementDemo): Unit = {
