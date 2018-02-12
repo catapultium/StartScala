@@ -21,10 +21,20 @@ abstract class Element {
   def above(that: Element): Element = new ArrayElement(this.contents ++ that.contents)
 
   def beside(that: Element): Element = {
-    val contents = new Array[String](this.contents.length)
-    for (i <- 0 until this.contents.length)
-      contents(i) = this.contents(i) + that.contents(i)
-    new ArrayElement(contents)
+    //    val contents = new Array[String](this.contents.length)
+    //    for (i <- 0 until this.contents.length)
+    //      contents(i) = this.contents(i) + that.contents(i)
+    //    new ArrayElement(contents)
+
+    new ArrayElement(
+      for (
+        (line1, line2) <- this.contents zip that.contents
+      ) yield line1 + line2
+    )
+
+    /* zip
+    * Array(1, 2, 3) zip Array("a", "b")
+    * Array((1, "a"), (2, "b")) */
   }
 
 }
